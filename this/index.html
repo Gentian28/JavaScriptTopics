@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <button id="button">Return this value</button>
+</head>
+
+<body>
+
+    <script>
+        // 'use strict'
+        // functions
+        const functionExpression = function () {
+            console.log('1. Function expression');
+            console.log(this);
+        }
+
+        const arrowFunction = () => {
+            console.log('2. Arrow function');
+            console.log(this);
+        }
+
+        // functions in an object
+        const objectFunctions = {
+            functionExpression() {
+                console.log('3. Function expression inside object');
+                console.log(this);
+            },
+            arrowFunction: () => {
+                console.log('4. Arrow function inside object');
+                console.log(this);
+            }
+        }
+
+        // functions in constructor function
+        function ConstructorFunction() {
+            this.functionExpression = function () {
+                console.log('5. Function expression inside of constructor function');
+                console.log(this);
+            }
+            this.arrowFunction = () => {
+                console.log('6. Arrow function inside of constructor function');
+                console.log(this);
+            }
+        }
+
+        // functions in factory function
+        const factoryFunction = function () {
+            return {
+                functionExpression() {
+                    console.log('7. Function expression inside of factory function');
+                    console.log(this);
+                },
+                arrowFunction: () => {
+                    console.log('8. Arrow function inside of factory function')
+                    console.log(this);
+                }
+            }
+        }
+
+        // functions in class
+        class ClassFunctions {
+            functionExpression() {
+                console.log('9. Function expression inside of class');
+                console.log(this);
+            }
+            arrowFunction = () => {
+                console.log('10. Arrow function inside of class');
+                console.log(this);
+            }
+        }
+
+        // functions calls
+        functionExpression(); /* this refers to window */
+        arrowFunction(); /* this refers to window */
+
+        // object functions calls
+        objectFunctions.functionExpression(); /* this refers to the object */
+        objectFunctions.arrowFunction(); /* this refers to window */
+
+        // constructor function functions calls
+        const constructorFunction = new ConstructorFunction();
+        constructorFunction.functionExpression(); /* this refers to the object initialized form CF */
+        constructorFunction.arrowFunction(); /* this refers to the object initialized form CF */
+
+        // factory function functions calls
+        const factory = factoryFunction();
+        factory.functionExpression(); /* this refers to the object */
+        factory.arrowFunction(); /* this refers to window */
+
+        // class functions calls
+        const classFunctions = new ClassFunctions();
+        classFunctions.functionExpression(); /* this refers to the object initialized from the class */
+        classFunctions.arrowFunction(); /* this refers to the object initialized from the class */
+
+        const button = document.getElementById('button');
+        button.addEventListener('click', functionExpression);
+        button.addEventListener('click', arrowFunction);
+        button.addEventListener('click', objectFunctions.functionExpression);
+        button.addEventListener('click', objectFunctions.arrowFunction);
+        button.addEventListener('click', constructorFunction.functionExpression);
+        button.addEventListener('click', constructorFunction.arrowFunction);
+        button.addEventListener('click', factory.functionExpression);
+        button.addEventListener('click', factory.arrowFunction);
+        button.addEventListener('click', classFunctions.functionExpression);
+        button.addEventListener('click', classFunctions.arrowFunction);
+    </script>
+</body>
+
+</html>
